@@ -6,7 +6,7 @@
 #set text(font: "Inria Sans")
 
 #show: simple-theme.with(
-  footer: [Simple slides],
+  footer: [Introduction & Histoire],
 )
 
 #title-slide[
