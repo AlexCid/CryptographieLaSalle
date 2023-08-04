@@ -369,3 +369,4 @@ Si on sait qu'un texte _français_ (suffisamment long!) a été chiffré en util
 
 Contre-ex : _La Disparition_ de Georges Perec
 ]
+
