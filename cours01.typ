@@ -49,6 +49,7 @@
 
 
 #slide[
+= Chiffres historiques
 #let cell = block.with(
   width: 100%,
 )
@@ -56,10 +57,10 @@
   columns: (auto, auto),
   rows: (auto),
   gutter: 3pt,
-  cell(height: 100%)[
+  cell(height: 80%)[
   *Chiffre de substitution*
   
-  #only(1)[#image("img/CaesarDisk.jpg", width: 90%)]
+  #only(1)[#image("img/CaesarDisk.jpg", width: 70%)]
   #only(2)[
   #pad(left:30pt,[
   A #sym.arrow.r N
@@ -78,7 +79,7 @@
 ]
 
   ],
-  cell(height: 100%)[
+  cell(height: 80%)[
   *Chiffre de transposition*
 
   #only(1)[#image("img/Skytale.png", width: 90%)]
@@ -94,12 +95,10 @@
   columns: 5,
   auto-lines: false,
 
-  // skip a column here         vv
   (), vlinex(), vlinex(),vlinex(),vlinex(), (),
   [A], [T],  [T], [A],[Q],
   [U], [E], [Z], [A],[L],
   [A], [U], [B], [E],()
-  //   ^^ '()' after the first cell are 100% ignored
 )
   
   #pad(left:30%,[
@@ -111,10 +110,7 @@
   ])
   ]
 ],
-
 )
-
-
 ]
 
 
@@ -354,7 +350,7 @@ Les bigrammes ont des fréquences différentes aussi !
  - l'enchaînement "nt" est beaucoup plus courant que "tn"
 
 
-Une permutation unique appliquée à tout un texte *préserve les fréquences*
+Une permutation unique appliquée à tout un texte *préserve les fréquences* (y compris des bigrammes)
 ]
 
 #slide[
@@ -370,3 +366,49 @@ Si on sait qu'un texte _français_ (suffisamment long!) a été chiffré en util
 Contre-ex : _La Disparition_ de Georges Perec
 ]
 
+#slide[
+== Décrypter Vigenère
+
+- Si on connaît la _longueur_ de la clé utilisée dans un chiffre de Vigenère, alors il "suffit" de décrypter $m$ chiffres de Caesar
+- On peut retrouver cette longueur grâce aux fréquences des lettres de la langue du texte clair... (mais d'autres méthodes existent aussi !)
+]
+
+#focus-slide[
+
+Au boulot ! A l'attaque de Vigenère...
+
+_ Partie II du TP n°1_
+]
+
+
+#slide[
+= Chiffres pré-modernes
+
+#v(1em)
+
+- Vigenère publié au XVI siècle, cassé fin du XIX siècle.
+
+- Puis vinrent les deux Guerres Mondiales
+  - Beaucoup de communications #sym.arrow besoin de cryptographie sûre
+
+- Système le plus connu de cette époque: *Enigma*
+]
+
+#slide[
+== Enigma
+
+#let cell = block.with(
+  width: 100%,
+)
+#grid(
+  columns: (auto, auto),
+  rows: (auto),
+  gutter: 3pt,
+  cell(height: 75%)[
+    #image("img/enigma.jpg", height:90%)
+  ],
+  cell(height: 75%)[
+    #image("img/Enigma-action.svg", height:90%)
+  ]
+)
+]
