@@ -1,6 +1,5 @@
 #import "@preview/polylux:0.2.0": *
 #import "@preview/tablex:0.0.4": tablex, gridx, hlinex, vlinex, colspanx, rowspanx
-#import "@preview/cetz:0.0.2"
 
 #import themes.simple: *
 
@@ -387,6 +386,183 @@ _ Partie II du TP n°1_
 #v(1em)
 
 - Vigenère publié au XVI siècle, cassé fin du XIX siècle.
+
+#v(1em)
+
+- Mais plusieurs améliorations sont possibles !
+]
+
+
+#slide[
+== Chiffrements *polygraphiques*
+#v(1em)
+
+- Dans les cryptosystèmes de César et de Vigenère, *une* lettre est transformée en *une* autre lettre...
+#v(1em)
+
+#only((2,3))[- ... et ce indépendamment lettre par lettre]
+#v(1em)
+
+#only(3)[- Et si on considérait des *groupes* de lettres plutôt ?]
+
+]
+
+
+#slide[
+== Chiffrement digraphique
+
+- $E = F = Sigma^+$
+
+- $K = 𝔖(Sigma^2)$ l'ensemble des bijections dans $Sigma^2$
+
+- $f(x = (x_i)_i,sigma) = (sigma(x_(2i),x_(2i+1)))_i$
+
+- $g(x = (x_i)_i,sigma) = (sigma^(-1)(x_(2i),x_(2i+1)))_i$
+
+]
+
+#slide[
+== Chiffre de Hill
+
+- Une substitution générique est coûteuse à représenter
+- Chiffre de Hill : ~ César mais en digraphique
+- César : $y = x + a$ où $y$ chiffré, $x$ clair, $a$ décalage
+- Généralisation (Hill) : $ vec(y_1, y_2) = mat(a,b;c,d) vec(x_1,x_2) = vec(a x_1 + b x_2 [26], c x_1+d x_2 [26]) $
+- Pour déchiffrer : il faut inverser la matrice $mat(a,b;c,d)$ (dans $ZZ #text[/] 26ZZ$)
+
+]
+
+#slide[
+== Cryptanalyse du chiffre de Hill
+
+- Les fréquences de digrammes différent !
+
+- Le chiffre de Hill est donc vulnérable à l'analyse statistique
+
+]
+
+
+#slide[
+#set list(spacing: 1.1em)
+
+== Chiffre de Hill généralisé
+
+- Le chiffre de Hill se généralise assez bien :
+
+  - à des dimensions supérieures
+
+  - à des corps plus grands ($FF_(256)$ i.e. des octets)
+
+- Le chiffrement et déchiffrement sont très rapides
+
+- En dimension assez grande, l'analyse statistique n'est plus efficace
+#only(2)[
+
+- Cependant, il n'est plus utilisé aujourd'hui. Pourquoi d'après vous ?]
+]
+
+
+#slide[
+= Les chiffres de la Première Guerre Mondiale
+
+- Avec l'avènement des méthodes de communication longue distance (télégrammes), protéger ses communications devient indispensable
+
+- Les belligérants sont capables d'intercepter les communications des autres pays
+
+- Si la sécurité n'est pas bonne: aïe aïe aïe...
+
+]
+
+#slide[
+== Le chiffre Ubchi
+
+- Chiffre utilisé par *toute* l'armée allemande en 1914 lorsqu'éclate la Première Guerre Mondiale
+- La même clé est utilisée pour *tous* les échanges...
+- L'algorithme est une double transposition : 
+
+
+#grid(
+columns: (20%, 5%,20%, 5%, 20%, 5%, 20%),
+rows: (auto),
+[
+  #tablex(
+  columns: 5,
+  auto-lines: false,
+
+  (), vlinex(), vlinex(),vlinex(),vlinex(), (),
+  [#text(fill:red)[M]], [#text(fill:teal)[A]], [#text(fill:green)[C]], [#text(fill:blue)[L]],[#text(fill:black)[E]],
+  hlinex(),
+  [#text(fill:red)[5]], [#text(fill:teal)[1]], [#text(fill:green)[2]], [#text(fill:blue)[4]],[#text(fill:black)[3]],
+  hlinex(),
+  [#text(fill:red)[A]], [#text(fill:teal)[T]], [#text(fill:green)[T]], [#text(fill:blue)[A]],[#text(fill:black)[Q]],
+  [#text(fill:red)[U]], [#text(fill:teal)[E]], [#text(fill:green)[Z]], [#text(fill:blue)[A]],[#text(fill:black)[L]],
+  [#text(fill:red)[A]], [#text(fill:teal)[U]], [#text(fill:green)[B]], [#text(fill:blue)[E]],()
+)
+
+],
+[
+#v(2.5em)
+#sym.arrow.r],
+[
+#tablex(
+  columns: 5,
+  auto-lines: false,
+  (), vlinex(), vlinex(),vlinex(),vlinex(), (),
+  [#text(fill:red)[M]], [#text(fill:teal)[A]], [#text(fill:green)[C]], [#text(fill:blue)[L]],[#text(fill:black)[E]],
+  hlinex(),
+  [#text(fill:red)[5]], [#text(fill:teal)[1]], [#text(fill:green)[2]], [#text(fill:blue)[4]],[#text(fill:black)[3]],
+  hlinex(),
+  [#text(fill:teal)[T]], [#text(fill:teal)[E]], [#text(fill:teal)[U]],[#text(fill:green)[T]],[#text(fill:green)[Z]], 
+  [#text(fill:green)[B]], [#text(fill:black)[Q]], [#text(fill:black)[L]],[#text(fill:blue)[A]], [#text(fill:blue)[A]],
+  [#text(fill:blue)[E]], [#text(fill:red)[A]],[#text(fill:red)[U]],[#text(fill:red)[A]], [#text(fill:black)[X]], 
+
+)],
+[
+#v(2.5em)
+#sym.arrow.r],
+[
+
+#tablex(
+  columns: 5,
+  auto-lines: false,
+  (), vlinex(), vlinex(),vlinex(),vlinex(), (),
+  [#text(fill:red)[M]], [#text(fill:teal)[A]], [#text(fill:green)[C]], [#text(fill:blue)[L]],[#text(fill:black)[E]],
+  hlinex(),
+  [#text(fill:red)[5]], [#text(fill:teal)[1]], [#text(fill:green)[2]], [#text(fill:blue)[4]],[#text(fill:black)[3]],
+  hlinex(),
+  [E], [Q], [A], [U], [L],
+  [U], [Z], [A], [X],  [T],
+  [A], [A], [T], [B], [E]
+)],
+
+[#v(2.5em)
+#sym.arrow.r],
+[EQAUL UAAXT AATBE],
+)
+
+]
+
+#slide[
+== Comment les français ont-il cassé Ubchi ?
+
+Un opérateur a oublié la deuxième transposition...
+#align(center)[
+#image("img/laboulette.jpg", width:50%)
+]
+]
+
+#slide[
+== Le chiffre ABC
+
+]
+
+
+
+
+
+#slide[
+== Et puis après ?
+
 
 - Puis vinrent les deux Guerres Mondiales
   - Beaucoup de communications #sym.arrow besoin de cryptographie sûre
