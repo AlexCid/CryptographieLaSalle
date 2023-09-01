@@ -551,23 +551,66 @@ Un opérateur a oublié la deuxième transposition...
 ]
 ]
 
+
 #slide[
-== Le chiffre ABC
+== Ubchi a été décrypté !
+
+- Tout le monde utilisait la même clef #sym.arrow.r oups !
+
+- Maintenant, les français peuvent déchiffrer les conversations #sym.arrow.r #emoji.hand.peace
+
+- Comment les Français vont-il utiliser cette information ?
+
+
+]
+#slide[
+== La réaction française
+
+#grid(
+columns: (35%,65%),
+rows: (75%),
+[
+#image("img/lematin.jpg", width:60%)
+],
+[
+#image("img/laboulette.jpg", width:90%)
+],)
 
 ]
 
 
 
+#slide[
+== Le chiffre ABC
 
+- La mèche est vendue, les allemands sont au courant du décryptage !
+
+- Et du coup, la clef est changée #emoji.face.sad
+
+- Mais les Français finissent par trouver un mode direct de décryptage ! #emoji.face.happy
+
+- Et du coup les allemands sont obligés de changer de cryptosystème : ils utilisent le chiffre dit "ABC"
+
+]
 
 #slide[
-== Et puis après ?
 
+== Le chiffre ABC (suite)
 
-- Puis vinrent les deux Guerres Mondiales
-  - Beaucoup de communications #sym.arrow besoin de cryptographie sûre
+- Bonne nouvelle pour les Français : ce chiffre est encore moins sûr !
 
-- Système le plus connu de cette époque: *Enigma*
+- Il s'agit simplement d'un chiffre Vigenère *avec une clé immuable égale à ABC*,
+
+- suivie d'une *simple* transposition (la moitié d'Ubchi)
+  - pour leur défense, la clé de la transposition changeait régulièrement 
+
+- cet algorithme ne résiste pas longtemps aux spécialistes français...
+
+]
+
+#focus-slide[
+== Puis vint Enigma !
+
 ]
 
 #slide[
