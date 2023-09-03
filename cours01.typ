@@ -90,6 +90,11 @@
   #pad(left:30%,[
     #sym.arrow.b
   ]) 
+
+#grid(
+  columns: (45%, 10%, 45%),
+  rows: (auto),
+  [
   #tablex(
   columns: 5,
   auto-lines: false,
@@ -99,12 +104,27 @@
   [U], [E], [Z], [A],[L],
   [A], [U], [B], [E],()
 )
+],
+[
+  #v(1.2em)
+  #sym.arrow.r],
+[ #tablex(
+  columns: 5,
+  auto-lines: false,
+
+  (), vlinex(), vlinex(),vlinex(),vlinex(), (),
+  [T], [T], [Q], [A],[A],
+  [E], [Z], [L], [U],[A],
+  [U], [B], [],  [A],[E]
+)
+]
+)
   
   #pad(left:30%,[
     #sym.arrow.b
   ]) 
 
-  AUATEUTZBAAEQL
+  TEUTZBQLAUAAAE
 
   ])
   ]
@@ -255,8 +275,8 @@ Chiffre de substitution simple (dit _de Caesar_):
 Chiffre de transposition simple:
 
 - $E = F = Sigma^+$
-- $K = NN$
-- $f(x = (x_i)_i,k) = (x_(floor(i/(n slash k)) + k*(i%n/k)))_i$ où $n$ est la longueur du message, en supposant que $n$ est un multiple de $k$ 
+- $K = (n, 𝔖(n))_(n in NN)$
+- $f(x = (x_i)_i,(k, sigma)) = (x_(sigma(floor(i/(n slash k))) + k*(i%n/k)))_i$ où $n$ est la longueur du message, en supposant que $n$ est un multiple de $k$ 
 ]
 
 #focus-slide[
@@ -451,7 +471,7 @@ _ Partie II du TP n°1_
 
   - à des dimensions supérieures
 
-  - à des corps plus grands ($FF_(256)$ i.e. des octets)
+  - à des corps plus grands ($FF_(2^8)^n$ i.e. des chaînes d'octets)
 
 - Le chiffrement et déchiffrement sont très rapides
 
@@ -557,7 +577,7 @@ Un opérateur a oublié la deuxième transposition...
 
 - Tout le monde utilisait la même clef #sym.arrow.r oups !
 
-- Maintenant, les français peuvent déchiffrer les conversations #sym.arrow.r #emoji.hand.peace
+- Maintenant, les français peuvent déchiffrer les conversations #emoji.hand.peace
 
 - Comment les Français vont-il utiliser cette information ?
 
@@ -608,8 +628,21 @@ rows: (75%),
 
 ]
 
+
+#slide[
+
+  == Et ensuite ?
+
+  - Les Allemands changèrent de code plusieurs fois :
+    - KRU 
+    - ADFGVX (substitution génériques en encodant sur deux lettres puis transposition)
+
+  - Tous deux furent décryptés !
+
+  - Un message ADFGVX décrypté fut crucial dans la victoire française : il s'agit du "Radiogramme de la victoire", permettant d'anticiper une attaque allemande à Compiègne !
+]
 #focus-slide[
-== Puis vint Enigma !
+== Puis vint la Deuxième Guerre Mondiale !
 
 ]
 
@@ -630,4 +663,16 @@ rows: (75%),
     #image("img/Enigma-action.svg", height:90%)
   ]
 )
+]
+
+#slide[
+  == Colossus et son créateur
+  #grid(
+    columns:(auto, 20%, auto),
+    rows:(60%),
+    [#image("img/Colossus.jpg", width:auto)],
+    [],
+    [#image("img/turing.jpg", width:auto)]
+  )
+
 ]
