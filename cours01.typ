@@ -10,7 +10,7 @@
 )
 
 #title-slide[
-  = Cryprographie
+  = Cryptographie
   #v(2em)
   Introduction & Histoire de la cryptographie
   #v(2em)
