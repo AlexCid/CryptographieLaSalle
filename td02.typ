@@ -17,12 +17,12 @@ Note: Pour tous les exercices, vous pouvez utiliser le package Python `cryptogra
 
 = Exercice 1
 
-Un texte de taille 16 octets a été chiffré en AES avec la clé (en hexadécimal) 0123456789ABCDEF0123456789ABCDEF et le chiffré obtenu est C68293BF2041C153FF19C9FE6AF71. Quel était le message clair ?
+Un texte de taille 16 octets a été chiffré en AES avec la clé (en hexadécimal) 0123456789ABCDEF0123456789ABCDEF et le chiffré obtenu est C682093BF20041C1053FF19C9FE6AF71. Quel était le message clair ?
 
 = Exercice 2 (optionnel)
 A l'aide de la bibliothèque `cryptography`, 
 
-- écrivez une fonction effectuant le chiffrement et le déchiffrement d'un seul bloc d'AES, en prenant en entrée le texte à (dé-)chiffrer et la clé
+- écrivez une fonction effectuant le chiffrement et le déchiffrement d'un seul bloc d'AES, en prenant en entrée le texte à (dé-)chiffrer (de taille 16 octets) et la clé
 - implémentez le mode de chiffrement CBC avec le padding de votre choix
 
 = Exercice 3 : un programme de chiffrement de fichier simple
