@@ -1,6 +1,7 @@
 #import "@preview/polylux:0.2.0": *
 #import "@preview/tablex:0.0.4": tablex, gridx, hlinex, vlinex, colspanx, rowspanx
-
+#import "@local/svg-emoji:0.1.0": setup-emoji, noto, github
+#show: setup-emoji.with(font: noto)
 #import themes.simple: *
 
 #set text(font: "Inria Sans")
@@ -577,7 +578,7 @@ Un opérateur a oublié la deuxième transposition...
 
 - Tout le monde utilisait la même clef #sym.arrow.r oups !
 
-- Maintenant, les français peuvent déchiffrer les conversations #emoji.hand.peace
+- Maintenant, les français peuvent déchiffrer les conversations 
 
 - Comment les Français vont-il utiliser cette information ?
 

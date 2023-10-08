@@ -314,7 +314,7 @@ Un système de chiffrement *asymétrique* se compose de:
 
 - Quatre ensembles $E, F, K ("clés privées"), K' ("clés publiques")$
 - D'une fonction *à sens unique* $h : K arrow.bar.r K'$
-- De deux fonctions, $f : E times K arrow.bar.r F, g: F times K arrow.bar.r E$ telles que
+- De deux fonctions, $f : E times K arrow.bar.r F, g: F times K' arrow.bar.r E$ telles que
   - $forall x in E, k in K, g(f(x, k), h(k)) = x$
   - On ne doit pas pouvoir retrouver $x$ à partir de $f(x, k)$ sans connaître $k$
 ]
@@ -450,5 +450,192 @@ Publié en 1977.
 ]
 
 #slide[
-  == Service n°3 : l'authenticité
+  = Service n°3 : l'authenticité
+#let cell = rect.with(
+  inset: 8pt,
+  fill: rgb("e4e5ea"),
+  width: 100%,
+  radius: 6pt
+)
+
+#only(1)[
+#grid(
+    rows: (25%, auto),
+    columns: (20%, 15%, 30%, 15%, 20%),
+    [#align(left)[#text(80pt)[#emoji.man] ]],[
+    #align(center)[#cetz.canvas({
+      import cetz.draw: *
+      line((0, 5), (5, 5), mark: (end: ">", stroke:3pt), stroke: 3pt)
+      content(((0,5.5), .5, (5,5.5)), [$K_"pub"^B$], anchor:"bottom")
+    })
+    ]],[#align(center)[#text(80pt)[🕵🏼‍♀️]]],[#cetz.canvas({
+      import cetz.draw: *
+      line((0, 5), (5, 5), mark: (end: ">", stroke:3pt), stroke: 3pt)
+      content(((0,5.5), .5, (5,5.5)), [#text(fill:white)[.]], anchor:"bottom")
+      
+    })],
+    [#align(right)[#text(80pt)[#emoji.woman]]],
+    [$K_"priv"^"B"$, $K_"pub"^"B"$],[],[$K^E_"priv"$, $K_"pub"^E$, $K_"pub"^"B"$],[],[#align(right)[$K$]],
+
+  )
+]
+
+#only(2)[
+#grid(
+    rows: (25%, auto),
+    columns: (20%, 15%, 30%, 15%, 20%),
+    [#align(left)[#text(80pt)[#emoji.man] ]],[
+    #align(center)[#cetz.canvas({
+      import cetz.draw: *
+      line((0, 5), (5, 5), mark: (end: ">", stroke:3pt), stroke: 3pt)
+      content(((0,5.5), .5, (5,5.5)),  [#text(fill:white)[.]], anchor:"bottom")
+    })
+    ]],[#align(center)[#text(80pt)[🕵🏼‍♀️]]],[#cetz.canvas({
+      import cetz.draw: *
+      line((0, 5), (5, 5), mark: (end: ">", stroke:3pt), stroke: 3pt)
+      content(((0,5.5), .5, (5,5.5)), [$K_"pub"^#text(fill:red)[E]$], anchor:"bottom")
+      
+    })],
+    [#align(right)[#text(80pt)[#emoji.woman]]],
+    [$K_"priv"^"B"$, $K_"pub"^"B"$],[],[$K^E_"priv"$, $K_"pub"^E$, $K_"pub"^"B"$],[],[#align(right)[$K$]],
+
+  )
+]
+#only(3)[
+#grid(
+    rows: (25%, auto),
+    columns: (20%, 15%, 30%, 15%, 20%),
+    [#align(left)[#text(80pt)[#emoji.man] ]],[
+    #align(center)[#cetz.canvas({
+      import cetz.draw: *
+      line((0, 5), (5, 5), mark: (end: ">", stroke:3pt), stroke: 3pt)
+      content(((0,5.5), .5, (5,5.5)),  [#text(fill:white)[.]], anchor:"bottom")
+    })
+    ]],[#align(center)[#text(80pt)[🕵🏼‍♀️]]],[#cetz.canvas({
+      import cetz.draw: *
+      line((0, 5), (5, 5), mark: (start: ">", stroke:3pt), stroke: 3pt)
+      content(((0,5.5), .5, (5,5.5)), [C=Chif($K_"pub"^#text(fill:red)[E],K)$], anchor:"bottom")
+      
+    })],
+    [#align(right)[#text(80pt)[#emoji.woman]]],
+    [$K_"priv"^"B"$, $K_"pub"^"B"$],[],[$K^E_"priv"$, $K_"pub"^E$,$K_"pub"^"B"$],[],[#align(right)[$K$, $K_"pub"^#text(fill:red)[E]$]],
+
+  )
+]
+
+#only(4)[
+#grid(
+    rows: (25%, auto),
+    columns: (20%, 15%, 30%, 15%, 20%),
+    [#align(left)[#text(80pt)[#emoji.man] ]],[
+    #align(center)[#cetz.canvas({
+      import cetz.draw: *
+      line((0, 5), (5, 5), mark: (start: ">", stroke:3pt), stroke: 3pt)
+      content(((0,5.5), .5, (5,5.5)),  [Chif($K_"pub"^#text(fill:black)[B],K)$], anchor:"bottom")
+    })
+    ]],[#align(center)[#text(80pt)[🕵🏼‍♀️]]],[#cetz.canvas({
+      import cetz.draw: *
+      line((0, 5), (5, 5), mark: (start: ">", stroke:3pt), stroke: 3pt)
+      content(((0,5.5), .5, (5,5.5)), [#text(fill:white)[.]], anchor:"bottom")
+      
+    })],
+    [#align(right)[#text(80pt)[#emoji.woman]]],
+    [$K_"priv"^"B"$, $K_"pub"^"B"$],[],[$K^E_"priv"$, $K_"pub"^E$,$K_"pub"^"B"$, $K=$ Déchif($K_"priv"^E$, C)],[],[#align(right)[$K$, $K_"pub"^#text(fill:red)[E]$]],
+
+  )
+]
+
+]
+
+#slide[
+  == L'attaque de l'homme-du-milieu (_man-in-the-middle_)
+
+
+  Comme on a pu le voir :
+
+  - un attaquant *actif* peut intercepter *et modifier* des messages entre correspondants
+  - en cas de réussite, les correspondants *ne se doutent de rien* mais la *confidentialité* de leurs échanges va être *compromise*
+
+  - possible car rien ne garantit *l'origine* des messages reçus (ici, principalement $K_"pub"^B$)
+]
+
+#slide[
+  == Les signatures électroniques
+
+  Permet de garantir *l'origine* du message. 
+  
+  Seul le détenteur de la *clé de génération de signature* peut authentifier des messages, tous les détenteurs de la *clé de vérification de signature* peuvent vérifier leur authenticité.
+  
+]
+#slide[
+  == Signature électronique : notation
+
+- Quatre ensembles $E$ (messages), $F$(signatures), $K$ (clés de génération), $K'$ (clés de vérification)
+- D'une fonction *à sens unique* $h : K arrow.bar.r K'$
+- De deux fonctions, $f : E times K arrow.bar.r F, g: F times E times K' arrow.bar.r {"true", "false"}$ telles que
+  - $forall x in E, k in K, g(f(x, k),x, h(k)) = "true"$
+  - Trouver $y in F$ tel que $g(y, x, h(k)) = "true"$ revient à connaître $k$
+]
+
+#slide[
+  == Un exemple de signature électronique : RSA !
+
+  - Clé de vérification : 
+   - $n$ produit de deux grands nombre premiers $p$ et $q$
+   - $e$, un nombre quelconque premier avec $(p-1)(q-1)$
+- Clé de génération :
+   - $n$ comme précédemment
+   - $d$ inverse de $e$ modulo $(p-1)(q-1)$
+]
+#slide[
+  == RSA : signons et vérifions !
+
+  #grid(
+    rows: (auto),
+    columns: (20%, 80%),
+    [#text(14pt)[
+      Rappels:
+      
+      $n = p dot q$
+      $phi(n)= (p-1)(q-1)$
+      $"pgcd"(e, phi(n)) = 1$
+
+      $e dot d equiv 1 [phi(n)]$
+    ]
+    ],[Pour signer $m < n$ :
+      
+      $S = m^d [n]$
+      
+      Pour vérifier :
+      
+      $ S^e [n] = m$ #sym.arrow $"true"$ sinon $"false"$
+
+      Pourquoi ça marche ?
+
+      $m ^ (e dot d) = m [n]$ #sym.arrow ah oui on vient de le voir
+    
+    ],
+    []
+  )
+]
+
+#slide[
+  == Signons des clés !
+
+  $m$ : clé AES $=$ entre $128$ bits et $256$ bits\
+On envoie $m^d [n]$, et c'est bon cette fois non ?
+  
+
+  #only(2)[
+  #text(fill:red, size:40pt)[NE FAITES JAMAIS ÇA]
+
+On peut trivialement générer des signatures pour tous les messages de type $r^e [n]$, $r$ quelconque par exemple.
+
+En plus : on aimerait pouvoir signer des messages plus long que $4096$ bits. Comment peut-on faire ? 
+  ]
+
+]
+
+#slide[
+  == Aparté : les fonctions de hachage
 ]
