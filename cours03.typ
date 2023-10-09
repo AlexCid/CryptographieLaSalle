@@ -638,4 +638,62 @@ En plus : on aimerait pouvoir signer des messages plus long que $4096$ bits. Com
 
 #slide[
   == Aparté : les fonctions de hachage
+
+#one-by-one[
+  On ne peut signer que des éléments relativement _courts_\ \
+  ][
+  Il faut donc *réduire* les messages avant de les signer\ \
+  ][
+  Mais attention #emoji.warning pas n'importe comment ! #emoji.warning\
+  Il ne faut pas réduire *deux messages* de la *même façon*
+  ]
+ 
+]
+
+#slide[
+  == Fonctions de hachage : les attendus
+
+
+  Une *fonction de hachage* est une fonction  $f : {0,1}^* arrow.bar {0,1}^n$ :
+
+  - résistante aux collisions : on ne doit pas pouvoir trouver $m_1 eq.not m_2$ tels que
+  $f(m_1) = f(m_2)$
+
+  - résistante à l'inversion : étant donné $y in {0,1}^n$, on ne doit pas pouvoir trouver $m$ tel que
+  $f(m) = y$
+]
+
+#slide[
+  == Fonctions de hachage : les bonus
+
+  En général, on peut aussi s'attendre aux propriétés suviantes :
+
+  - Indistinguable de l'aléa : une fonction de hachage $f$ est idéalement *indistinguable* d'une fonction aléatoire (mais déterministe)
+
+  - Propriété _d'avalanche_ : en changeant *1* bit de l'entrée, chaque bit de sortie a *une chance sur deux* d'être inversée 
+    - (c'est impliqué par la propriété précédente, voyez-vous pourquoi ?)
+]
+
+#slide[
+  == Les fonctions de hachage modernes
+
+  - #strike[MD4, MD5, SHA1] : on oublie, c'est cassé
+  - SHA2 : existe en plusieurs versions, en fonction de la taille de sortie :
+    - SHA256, SHA384, SHA512, SHA512-256, SHA512-384
+  - SHA3 (_alias_ Keccak ) : une famille de fonctions
+    - Existe en version à tailles standardisées (256, 384, 512 bits)
+    - Existe aussi en version à taille arbitraire
+]
+
+#slide[
+  == Signatures : le retour
+
+  - On ne signe pas les clés, on signe *le haché* des clés
+  - On ne les signe pas non plus *directement*, c'est le retour du *padding* :
+
+    - PKCS\#1 v1.5 (Signature) : déterministe
+    `0x00 || 0x01 || FFFFF...FFFF || 0x00 || Type de hash ||  m`
+    
+    - PSS : probabiliste et plus moderne
+      - et également plus compliqué à décrire
 ]
