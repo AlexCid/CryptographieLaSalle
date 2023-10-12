@@ -449,6 +449,19 @@ Publié en 1977.
   Algorithme général marche aussi sur des courbes elliptiques
 ]
 
+
+#focus-slide[
+  Interlude : le projet !
+
+  #set align(left);
+
+  - Groupes de 2 ou 3
+
+  - Proposition de sujet d'ici la prochaine séance
+
+  - Noté sur des présentations de 30 (?) min
+]
+
 #slide[
   = Service n°3 : l'authenticité
 #let cell = rect.with(
@@ -668,9 +681,9 @@ En plus : on aimerait pouvoir signer des messages plus long que $4096$ bits. Com
 
   En général, on peut aussi s'attendre aux propriétés suviantes :
 
-  - Indistinguable de l'aléa : une fonction de hachage $f$ est idéalement *indistinguable* d'une fonction aléatoire (mais déterministe)
+  - Indistinguable de l'aléa : une fonction de hachage $f$ est idéalement *indistinguable* d'une fonction choisie au hasard
 
-  - Propriété _d'avalanche_ : en changeant *1* bit de l'entrée, chaque bit de sortie a *une chance sur deux* d'être inversée 
+  - Propriété _d'avalanche_ : en changeant *1* bit de l'entrée, chaque bit de sortie a *une chance sur deux* d'être inversé
     - (c'est impliqué par la propriété précédente, voyez-vous pourquoi ?)
 ]
 
@@ -696,4 +709,17 @@ En plus : on aimerait pouvoir signer des messages plus long que $4096$ bits. Com
     
     - PSS : probabiliste et plus moderne
       - et également plus compliqué à décrire
+]
+
+
+#slide[
+  = C'est tout pour aujourd'hui !
+
+  La séance prochaine, nous verrons :
+
+  - quelques services de plus : intégrité, dérivation de clés
+
+  - comment assembler les services en des *protocoles* de la vraie vie : TLS, SSH
+
+  - en bonus : un peu de temps pour le projet
 ]
