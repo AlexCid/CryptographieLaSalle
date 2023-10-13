@@ -8,13 +8,13 @@
 #set text(font: "Inria Sans")
 
 #show: simple-theme.with(
-  footer: [Chiffrement symétrique],
+  footer: [Chiffrement asymétrique],
 )
 
 #title-slide[
   = Cryptographie
   #v(2em)
-  Chiffrement asymétrique
+  Cryptographie asymétrique
   #v(2em)
 
   Alexander Schaub #footnote[DGA-MI, Bruz] #h(1em)
@@ -23,7 +23,7 @@
 
   
 
-  13/09/2023
+  13/10/2023
 ]
 
 #slide[
@@ -315,8 +315,8 @@ Un système de chiffrement *asymétrique* se compose de:
 - Quatre ensembles $E, F, K ("clés privées"), K' ("clés publiques")$
 - D'une fonction *à sens unique* $h : K arrow.bar.r K'$
 - De deux fonctions, $f : E times K arrow.bar.r F, g: F times K' arrow.bar.r E$ telles que
-  - $forall x in E, k in K, g(f(x, k), h(k)) = x$
-  - On ne doit pas pouvoir retrouver $x$ à partir de $f(x, k)$ sans connaître $k$
+  - $forall x in E, k in K, g(f(x, h(k)), k) = x$
+  - On ne doit pas pouvoir retrouver $x$ à partir de $f(x, h(k))$ sans connaître $k$
 ]
 
 #slide[
@@ -395,7 +395,7 @@ Publié en 1977.
 #slide[
   == Envoyons des clés !
 
-  $m$ : clé AES $=$ entre $128$ bits et $192$ bits\
+  $m$ : clé AES $=$ entre $128$ bits et $256$ bits\
   $e$ : historiquement la valeur $3$ était beaucoup utilisée et elle est valide
 
 
@@ -657,7 +657,7 @@ En plus : on aimerait pouvoir signer des messages plus long que $4096$ bits. Com
   ][
   Il faut donc *réduire* les messages avant de les signer\ \
   ][
-  Mais attention #emoji.warning pas n'importe comment ! #emoji.warning\
+  Mais attention ! pas n'importe comment ! \
   Il ne faut pas réduire *deux messages* de la *même façon*
   ]
  
