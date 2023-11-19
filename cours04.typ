@@ -413,7 +413,207 @@ Le tunnel sécurisé n'est pas particulièrement élégant - pouvez-vous me dire
     == SSH : authentification
 
     Une fois le tunnel établi, le client peut se connecter :
-    - soit via clé publique : le serveur connaît la clé publique, et le client signe (notamment) la valeur $H$
+    - soit via clé publique : le serveur connaît la clé publique, et le client signe (entre autres) la valeur $H$
     - soit via mot de passe, en le transmettant dans le tunnel sécurisé
 ]
-// Voir paragraphe 8 de RFC 4253  pour l'échange Diffie-Hellman
+
+
+#slide[
+    == TLS 1.3 : Le HTTPS _moderne_
+#set text(size:24pt)
+
+#v(-1.0em)
+Un petit récapitulatif :
+ - SSL 1.0 initialement développé par Taher ElGamal (#text(size:18pt)[le même qui a inventé le chiffrement ElGamal]) chez Netscape (l'ancêtre de Mozilla)
+ - SSL 1.0 est tout cassé, Netscape développe SSL 2.0 qui est rendu public en 1995
+ - SSL 2.0 est *également* tout cassé, ce qui donne SSL 3.0 en 1996
+ - L'IETF se réveille en 1999 et standardise TLS1.0, une variante de SSL 3.0
+ - TLS 1.1 et 1.2 modernisent _un peu_ le protocole
+- TLS 1.3, sorti en 2018, fait le grand ménage, enlève les options obsolètes et corrige plusieurs failles
+]
+
+#slide[
+    == TLS : Objectif
+
+Il s'agit d'établit *un tunnel sécurisé* entre votre *navigateur* et un *serveur web* (proposant un service HTTP).
+
+Doit être compatible HTTP : le protocole fonctionne au-dessus d'une connection *TCP* uniquement.
+
+Doit être résistant aux attaques par homme-du-milieu : plus question de _TOFU_, mais de *certificats*.
+]
+
+#slide[
+    == TLS : Certificats
+#v(-1em)
+#align(center)[
+    #image("img/chain_of_trust.png", width:65%)
+]
+#text(size: 22pt)[source: #link("https://www.exoscale.com")]
+]
+
+#slide[
+    == Aparté : Que contient un certificat ?
+
+    - Dates de validité (pas avant / pas après)
+    - Nom(s) de domaine
+     - avec potentiellement des _wildcard_, i.e. tous les sous-domaines
+      - par contre, \*.com est interdit. Et \*.co.uk aussi...
+    - Une clé publique (pour la signature, ou le chiffrement asymétrique, ou l'échange de clés)
+    - Les usages possibles (authorité racine, intermédiaire, certificat final)
+    - Une signature d'une authorité supérieure
+    - L'identifiant de cette authorité
+   
+]
+#slide[
+    == TLS1.3 : Négotiation d'algorithmes
+
+    #grid(
+    rows: (15%, 30%,auto),
+    columns: (30%, 40%, 30%),
+    [#text(80pt)[💻]],[
+    #cetz.canvas({
+      import cetz.draw: *
+      let (a, b) = ((0, 5), (10, 5))
+      line(a, b, stroke: 3pt,mark: (end: ">", stroke:3pt))
+      
+      content((a, 0.5, b), angle: b, [Liste d'algorithmes acceptés], anchor: "top", padding: 10pt)
+    })
+    ],[#align(right)[ #text(80pt)[🌐]]],
+    [],[],[],
+
+  )
+  #v(-2.5em)
+      Algorithmes pour :
+      - chiffrement authentifié/dérivation de clé HKDF
+      - groupes (EC)DHE supportés + clés publiques associéés
+      - algorithmes de signature (pour TLS / optionnellement pour certificats)
+      - _optionnellement : clé pré-partagée (issue d'une connexion précédente)_
+]
+
+#slide[
+    == TLS1.3 : Choix d'algorithmes
+
+    #grid(
+    rows: (15%, 30%,auto),
+    columns: (30%, 40%, 30%),
+    [#text(80pt)[💻]],[
+    #cetz.canvas({
+      import cetz.draw: *
+      let (a, b) = ((0, 5), (10, 5))
+      line(a, b, stroke: 3pt,mark: (start: ">", stroke:3pt))
+      
+      content((a, 0.5, b), angle: b, [Choix d'algorithme], anchor: "top", padding: 10pt)
+    })
+    ],[#align(right)[ #text(80pt)[🌐]]],
+    [],[],[],
+
+  )
+  #v(-2.5em)
+      - Choix d'algorithme de chiffrement
+      - Choix de groupe (EC)DHE + clé publique éphémère associée
+      
+]
+
+#slide[
+    == TLS1.3 : Certificat serveur
+
+    #grid(
+    rows: (15%, 30%,auto),
+    columns: (30%, 40%, 30%),
+    [#text(80pt)[💻]],[
+    #cetz.canvas({
+      import cetz.draw: *
+      let (a, b) = ((0, 5), (10, 5))
+      line(a, b, stroke: 3pt,mark: (start: ">", stroke:3pt))
+      
+      content((a, 0.5, b), angle: b, [Certificat + Signature], anchor: "top", padding: 10pt)
+    })
+    ],[#align(right)[ #text(80pt)[🌐]]],
+    [],[],[],
+  )
+  - certificat (contenant une clé de vérification) + chaîne de certificats
+  - signature du message client + message serveur + certificat (avec la clé correspondante au certificat)
+]
+
+#slide[
+    == Aparté : Diffie-Hellman éphémère
+
+Pour faire un échange de clés authentifié :
+- Soit le certicat contient la clé publique DH du serveur,
+- Soit :  
+    - le certificat contient une clé de vérification de signature, 
+    - le serveur génère un nouveau bi-clé pour chaque échange de clés
+    - le serveur signe la clé publique de cette bi-clé
+
+Deuxième solution appelée "échange de clé éphémère" (la première est dite _statique_)
+]
+
+#slide[
+    == Aparté : Diffie-Hellman éphémère et _PFS_
+
+PFS : _Perfect Forward Secrecy_
+
+Même si la clé *privée* du certificat serveur est diffusée, les échages *antérieurs à cette diffusion* ne peuvent pas être compromis.
+
+Diffie-Hellman éphémère possède la propriété PFS. Ce n'est *pas le cas* pour un Diffie-Hellman statique.
+]
+
+
+
+#slide[
+    == TLS1.3 : Fin de la négociation serveur
+
+    #grid(
+    rows: (15%, 30%,auto),
+    columns: (30%, 40%, 30%),
+    [#text(80pt)[💻]],[
+    #cetz.canvas({
+      import cetz.draw: *
+      let (a, b) = ((0, 5), (10, 5))
+      line(a, b, stroke: 3pt,mark: (start: ">", stroke:3pt))
+      
+      content((a, 0.5, b), angle: b, [HMAC(...)], anchor: "top", padding: 10pt)
+    })
+    ],[#align(right)[ #text(80pt)[🌐]]],
+    [],[],[],
+  )
+  Le serveur envoie un HMAC des messages précédents. La clé est dérivée du secret partagé par (EC)DHE.
+]
+
+#slide[
+    == TLS1.3 : Fin de la négociation client
+
+    #grid(
+    rows: (15%, 30%,auto),
+    columns: (30%, 40%, 30%),
+    [#text(80pt)[💻]],[
+    #cetz.canvas({
+      import cetz.draw: *
+      let (a, b) = ((0, 5), (10, 5))
+      line(a, b, stroke: 3pt,mark: (end: ">", stroke:3pt))
+      
+      content((a, 0.5, b), angle: b, [HMAC(...)], anchor: "top", padding: 10pt)
+    })
+    ],[#align(right)[ #text(80pt)[🌐]]],
+    [],[],[],
+  )
+  Le *client* envoie un HMAC des messages précédents. La clé est dérivée du secret partagé par (EC)DHE. Cela assure que les deux parties ont bien *dérivé la même clé*.
+]
+
+#slide[
+    == TLS1.3 : Tunnel sécurisé
+
+    Après établissement d'un clé de session :
+
+    - Les données sont envoyées chiffrés en utilisant du *chiffrement authentique*
+    - L'en-tête clair contient la taille des données
+    - Les applications utilisant TLS peuvent utiliser un *padding optionnel* (qui sera chiffré) pour tenter de *cacher la taille des données*
+]
+
+
+
+#focus-slide[
+    La semaine prochaine : un petit bonus et *présentation des projets*
+
+    Bon courage !
+]
