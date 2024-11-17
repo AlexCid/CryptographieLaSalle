@@ -48,7 +48,7 @@ KJFEDQVIEJJFMFILWVSRWZGNJLIKIASVQCAGGZCETWPGSXDMESFORRLARVJIRQWVWQRRWMXWUIEAIYWH
 AQRGZSRVJVTTSVYJJEQFIIZZVIVIJTLEVSYZFMRMUSMAVRBWHWGRTMSYPVLIXSWKJET
 ```
 
-Grâce à votre raiseau d'espions, vous savez qu'il s'agit d'un texte clair en français qui a été chiffré avec un système de Vigenère, réputé inviolable ! Cela ne va cependant pas vous arrêter, et vous vous attelez à la lourde tâche de déchiffrer ce message cryptique...
+Grâce à votre réseau d'espions, vous savez qu'il s'agit d'un texte clair en français qui a été chiffré avec un système de Vigenère, réputé inviolable ! Cela ne va cependant pas vous arrêter, et vous vous attelez à la lourde tâche de déchiffrer ce message cryptique...
 
 == Décryptage automatique du chiffre Caesar
 
