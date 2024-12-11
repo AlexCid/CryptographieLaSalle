@@ -25,7 +25,6 @@ kdf = Argon2id(
 )
 
 key = kdf.derive(mdp.encode())
-print(key)
 
 # Etape 2 : lire le contenu de fichier_clair
 contenu_clair = open(fichier_clair, "rb").read()
