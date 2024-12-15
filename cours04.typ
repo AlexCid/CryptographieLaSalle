@@ -384,7 +384,7 @@ Deux manières de vérifier l'authenticité de $K_"verif"$:
 #v(-1em)
 Le client vérifie la signature. Si elle convient, le serveur et le client se sont mis d'accord sur $H$ et $K$, puis dérivent :
 - l'IV de chiffrement initial (client #sym.arrow serveur et serveur #sym.arrow client )
-- la clé de chiffrement et de MAC client #sym.arrow serveur et serveur #sym.arrow client
+- les clés de chiffrement et MAC client #sym.arrow serveur et serveur #sym.arrow client
 ]
 
 #slide[

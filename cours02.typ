@@ -3,7 +3,6 @@
 //#import "@local/svg-emoji:0.1.0": setup-emoji, noto, github
 //#show: setup-emoji.with(font: noto)
 #import themes.simple: *
-#import themes.simple: *
 
 #set text(font: "Inria Sans")
 
