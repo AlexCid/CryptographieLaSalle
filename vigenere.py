@@ -1,18 +1,10 @@
 def dechiffre_cesar(texte, dec):
     resultat = ""
     for char in texte:
-        if char.isalpha():
-            decalage = dec % 26
-            code = ord(char) - decalage
-            if char.islower():
-                if code < ord('a'):
-                    code += 26
-            elif char.isupper():
-                if code < ord('A'):
-                    code += 26
-            resultat += chr(code)
-        else:
-            resultat += char
+        code = ord(char) - dec
+        if code < ord('A'):
+            code += 26
+        resultat += chr(code)
     return resultat
 
 
