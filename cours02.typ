@@ -28,7 +28,7 @@
 #slide[
   == Principe
   #align(center)[
-    #image("img/symmetrique.jpg", height: 55%)
+    #image("img/symmetrique2.jpg", height: 55%)
   ]
   - Fonction cryptographique *bijective*
   - La *même* clé utilisée pour le chiffrement et le déchiffrement
