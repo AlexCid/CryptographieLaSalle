@@ -26,14 +26,28 @@ for cle in cles_destinataires:
         )
         chiffres_cle.append(ciphertext)
 
-# TODO : chiffrer les données
 
+
+from cryptography.hazmat.primitives import padding
+from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
+iv = secrets.token_bytes(16)
+padder = padding.PKCS7(128).padder()
+
+cipher = Cipher(algorithms.AES(cle_symmetrique), modes.CBC(iv))
+
+with open(fichier_a_chiffrer, mode="rb") as f:
+    contenu = f.read()
+
+padded_data = padder.update(contenu)
+padded_data += padder.finalize()
+encryptor = cipher.encryptor()
+contenu_chiffre = encryptor.update(padded_data) + encryptor.finalize()
 
 resultat = {
     "iv":iv,
-    "chiffre": chiffre,
+    "chiffre": contenu_chiffre,
     "chiffres_cle": chiffres_cle
 }
-
+print(resultat)
 import pickle
 pickle.dump(resultat, open(fichier_a_creer, "wb"))
