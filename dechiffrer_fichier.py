@@ -5,8 +5,8 @@ import cryptography
 from cryptography.hazmat.primitives.kdf.argon2 import Argon2id
 from cryptography.hazmat.primitives import padding
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
-unpadder = padding.PKCS7(128).unpadder()
 
+unpadder = padding.PKCS7(128).unpadder()
 
 
 fichier_chiffre = sys.argv[1]
@@ -25,15 +25,10 @@ with open(fichier_chiffre, mode="rb") as f:
         secret=None,
     )
     cle = kdf.derive(mdp.encode("utf-8"))
-    cipher = Cipher(
-        algorithms.AES(cle), modes.CBC(iv)
-    )
+    cipher = Cipher(algorithms.AES(cle), modes.CBC(iv))
 
     clair = cipher.decryptor().update(contenu[16:]) + cipher.decryptor().finalize()
     clair_unpadde = unpadder.update(clair) + unpadder.finalize()
 
     with open(fichier_sortie, mode="wb") as f_sortie:
         f_sortie.write(clair_unpadde)
-
-
-
